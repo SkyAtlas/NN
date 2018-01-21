@@ -1,26 +1,15 @@
 
 # coding: utf-8
 
-# In[1]:
-
-
 from keras.datasets import mnist
 from keras.models import Model
 from keras.layers import Input, Dense
 from keras.utils import np_utils
 
-
-# In[2]:
-
-
 # hyperparameters
 batch_size = 128
 num_epoch = 30
 hidden_size = 512
-
-
-# In[3]:
-
 
 num_train = 60000
 num_test = 10000
@@ -40,10 +29,6 @@ X_test /= 255
 Y_train = np_utils.to_categorical(y_train, num_classes)
 Y_test = np_utils.to_categorical(y_test, num_classes)
 
-
-# In[4]:
-
-
 inp = Input(shape = (height*width*depth,))
 hidden_1 = Dense(hidden_size, activation ='relu')(inp)
 hidden_2 = Dense(hidden_size, activation = 'relu')(hidden_1)
@@ -52,21 +37,12 @@ out = Dense(num_classes, activation = 'softmax')(hidden_3)
 
 model = Model(input=inp, output=out)
 
-
-# In[5]:
-
-
 model.compile(loss='categorical_crossentropy',
               optimizer = 'adam',
               metrics = ['accuracy'])
-
-
-# In[7]:
-
 
 model.fit(X_train, Y_train,
           batch_size = batch_size, nb_epoch = num_epoch,
           verbose = 1, validation_split =  0.1)
 
 model.evaluate(X_test, Y_test, verbose=1)
-
